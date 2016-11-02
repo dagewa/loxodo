@@ -45,9 +45,10 @@ class VaultFrame(wx.Frame):
             self.InsertColumn(0, _("Title"))
             self.InsertColumn(1, _("Username"))
             self.InsertColumn(2, _("Group"))
-            self.SetColumnWidth(0, 256)
-            self.SetColumnWidth(1, 128)
-            self.SetColumnWidth(2, 256)
+            npx_x = wx.GetDisplaySize()[0]
+            self.SetColumnWidth(0, npx_x // 8)
+            self.SetColumnWidth(1, npx_x // 8)
+            self.SetColumnWidth(2, npx_x // 8)
             self.sort_function = lambda e1, e2: cmp(e1.group.lower(), e2.group.lower())
             self.update_fields()
 
@@ -147,7 +148,8 @@ class VaultFrame(wx.Frame):
 
         self._searchbox = wx.SearchCtrl(self.panel, size=(200, -1))
         self._searchbox.ShowCancelButton(True)
-        self.list = self.VaultListCtrl(self.panel, -1, size=(640, 240), style=wx.LC_REPORT|wx.SUNKEN_BORDER|wx.LC_VIRTUAL|wx.LC_EDIT_LABELS)
+        npx_x, npx_y = wx.GetDisplaySize()
+        self.list = self.VaultListCtrl(self.panel, -1, size=(3 * npx_x // 8, npx_y // 2), style=wx.LC_REPORT|wx.SUNKEN_BORDER|wx.LC_VIRTUAL|wx.LC_EDIT_LABELS)
         self.list.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self._on_list_contextmenu)
         self.list.Bind(wx.EVT_RIGHT_UP, self._on_list_contextmenu)
         self.list.Bind(wx.EVT_CHAR, self._on_list_box_char)
